@@ -4,11 +4,11 @@ import { DarkWine, White, WhiteWine, Wine } from "../../assets/Colors"
 import { useState } from "react"
 import { useList } from "../../contexts/List"
 import { v4 as uuid } from "uuid"
+import { timeToSecond } from "../../shared/utils/Date"
 
 
 const MyFormStyled = styled.form`
-    width: 100%;
-    margin: 2rem;
+    width: 60%;
     padding: 1rem;
     background-color: ${DarkWine};
     display: flex;
@@ -39,18 +39,23 @@ const MyFormStyled = styled.form`
     .box__input input::placeholder {
         color: ${WhiteWine};
     }
+    @media screen and (max-width: 1080px) {
+        .inputs {
+            flex-direction: column;
+        }
+    }
 `
 
 const MyForm = () => {
     const { tasks, setTasks } = useList()
-    const [name, setName] = useState("")
-    const [time, setTime] = useState("")
+    const [name, setName] = useState("teste")
+    const [time, setTime] = useState("00:00:10")
     const saveTask = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const newTask = {
             id: uuid(),
             name: name,
-            time:time,
+            time: timeToSecond(time),
             selected: false,
             finish: false
         }

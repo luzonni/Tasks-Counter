@@ -1,6 +1,6 @@
 import { ReactElement } from "react"
 import styled from "styled-components"
-import { White, Wine } from "../../assets/Colors"
+import { White, WhiteWine, Wine } from "../../assets/Colors"
 
 const ByttonStyle = styled.button`
     background-color: ${Wine};
@@ -10,16 +10,32 @@ const ByttonStyle = styled.button`
     border-radius: 6px;
     text-transform: uppercase;
     font-weight: bold;
+    &:active {
+        background-color: ${WhiteWine};
+    }
 `
 
 interface ButtonProps {
     children?: ReactElement | string
     type?: "button" | "submit" | "reset" | undefined
+    onClick?: () => void
 }
 
-const Button = ({type = "button", children}: ButtonProps) => {
+const Button = ({type = "button", children, onClick}: ButtonProps) => {
+    const playSound = () => {
+        const audio = new Audio('/public/place.wav');
+        audio.play();
+      };
+    function click() {
+        if(onClick) {
+            onClick()
+        } 
+        playSound()
+    }
     return (
-        <ByttonStyle type={type}>{children}</ByttonStyle>
+        <ByttonStyle type={type} onClick={() => click()}>
+            {children}
+        </ByttonStyle>
     )
 }
 

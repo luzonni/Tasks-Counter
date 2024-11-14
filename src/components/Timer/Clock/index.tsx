@@ -1,8 +1,7 @@
 import styled from "styled-components"
 import { White, Wine } from "../../../assets/Colors"
-import { useList } from "../../../contexts/List"
-import { timeToSecond } from "../../../shared/utils/Date"
-import { useEffect, useState } from "react"
+import Task from "../../../shared/interfaces/Task"
+import { secondsToString } from "../../../shared/utils/Date"
 
 const ClockStyle = styled.div`
     display: flex;
@@ -15,34 +14,14 @@ const ClockStyle = styled.div`
     font-weight: bold;
 `
 
-const Clock = () => {
-    const { selected } = useList()
-    if (!selected) {
-        return (
-            <ClockStyle>
-                <span>0</span>
-                <span>0</span>
-                <span>:</span>
-                <span>0</span>
-                <span>0</span>
-            </ClockStyle>
-        )
-    }
-    const [ time, setTime ] = useState<number>(0)
-    useEffect(() => {
-        setTime(timeToSecond(selected.time))
-    }, [selected])
-    const minutos: number = Math.floor(time/60)
-    const seconds: number = time % 60
-    const [minDezena, minUni] = String(minutos).padStart(2, "0")
-    const [secondDezena, secondUni] = String(seconds).padStart(2, "0")
+interface ClockProps {
+    selected?: Task
+}
+
+const Clock = ({ selected }: ClockProps) => {
     return(
         <ClockStyle>
-            <span>{minDezena}</span>
-            <span>{minUni}</span>
-            <span>:</span>
-            <span>{secondDezena}</span>
-            <span>{secondUni}</span>
+            <span>{secondsToString(selected?.time)}</span>
         </ClockStyle>
     )
 }

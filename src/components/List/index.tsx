@@ -4,8 +4,7 @@ import { DarkWine, White } from "../../assets/Colors"
 import { useList } from "../../contexts/List"
 
 const MyListStyle = styled.aside`
-    width: 100%;
-    margin: 2rem;
+    width: 60%;
     background-color: ${DarkWine};
     padding: 1rem;
     border-radius: 16px;

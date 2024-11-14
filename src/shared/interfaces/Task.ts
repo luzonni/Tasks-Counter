@@ -2,7 +2,7 @@
 interface Task {
     id: string
     name: string
-    time:string
+    time: number
     finish: boolean
 }
 

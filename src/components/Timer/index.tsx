@@ -2,6 +2,8 @@ import styled from "styled-components"
 import Button from "../Button"
 import Clock from "./Clock"
 import { DarkWine, White } from "../../assets/Colors"
+import { useList } from "../../contexts/List"
+import { useEffect, useState } from "react"
 
 const TimerStyle = styled.div`
     margin-top: 2rem;
@@ -17,13 +19,42 @@ const TimerStyle = styled.div`
 `
 
 const Timer = () => {
-    return(
+    const { selected, setSelected, tasks, setTasks } = useList()
+    const [ running, setRunning ] = useState<boolean>(false)
+    setTimeout(() => { 
+        if(selected && selected.time > 0 && running) {
+            setTasks(tasks.map((task) => {
+                if(selected.id === task.id) {
+                    const changedTask = {
+                        ...task,
+                        time: task.time - 1
+                    }
+                    setSelected(changedTask)
+                    return changedTask
+                }
+                return task
+            }))
+        }else if(selected && selected.time === 0) {
+            setRunning(false)
+            setTasks(tasks.map((task) => {
+                if(task.time === 0) {
+                    return {
+                        ...task,
+                        finish: true
+                    }
+                }
+                return task
+            }))
+        }
+    }, 1000)
+    
+    return (
         <TimerStyle>
             <p>Choose a card and start a timer.</p>
             <div>
-                <Clock/>
+                <Clock selected={selected}/>
             </div>
-            <Button>Start</Button>
+            <Button onClick={() => {setRunning(!running)}}>{!running ? "Start" : "Pause"}</Button>
         </TimerStyle>
     )
 }

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { DarkWine, White, WhiteWine, Wine } from "../../../assets/Colors";
 import Task from "../../../shared/interfaces/Task";
 import { useList } from "../../../contexts/List";
+import { secondsToString } from "../../../shared/utils/Date";
 
 
 
@@ -20,6 +21,9 @@ const CardItemStyle = styled.li`
     }
     button h3 {
         font-size: 1.5rem;
+    }
+    .completed {
+        color: green;
     }
     button span {
         background-color: ${DarkWine};
@@ -50,8 +54,8 @@ const CardItem = (task: Task) => {
     return(
         <CardItemStyle onClick={() => {choose(task)}}>
             <button className={isSelected() ? "selected" : ""}>
-                <h3>{task.name}</h3>
-                <span>{task.time}</span>
+                <h3 className={task.finish ? "completed" : ""}>{task.name}</h3>
+                <span>{secondsToString(task.time)}</span>
             </button>
         </CardItemStyle>
     )
