@@ -48,8 +48,8 @@ const MyFormStyled = styled.form`
 
 const MyForm = () => {
     const { tasks, setTasks } = useList()
-    const [name, setName] = useState("teste")
-    const [time, setTime] = useState("00:00:10")
+    const [name, setName] = useState<string>("")
+    const [time, setTime] = useState<string>("")
     const saveTask = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const newTask = {

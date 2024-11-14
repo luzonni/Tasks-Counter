@@ -3,7 +3,7 @@ import Button from "../Button"
 import Clock from "./Clock"
 import { DarkWine, White } from "../../assets/Colors"
 import { useList } from "../../contexts/List"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 const TimerStyle = styled.div`
     margin-top: 2rem;
